@@ -1,0 +1,78 @@
+<% include header %>
+
+<div class="container-fluid wrap">
+
+  <div class="row">
+    <div class="col-md-12">
+     <h2>Show All Brick Sets</h2>
+    </div>
+  </div>
+
+  <div class="row search">
+    <div class="col-md-12" id="search_panel">
+      <form action="" id="search_form">
+        <span>Search Terms:</span>       
+         <input class="form-control input-lg" id="inputsm" type="text" placeholder="Search...">
+         <button type="button" class="btn btn-info btn-lg">Search</button>
+       </form> 
+    </div>
+  </div>
+ 
+  <div class="row page_navi">
+    <div class="col-md-6">
+      <div class="numpages"><%= resultNo %> results found, showing page 1-20</div>
+    </div>
+    <div class="col-md-6">
+      <ul class="pagination page_list">
+        <li><a href="#">1</a></li>
+          <li class="active"><a href="#">2</a></li>
+          <li><a href="#">3</a></li>
+          <li><a href="#">4</a></li>
+          <li><a href="#">5</a></li>
+      </ul>
+    </div>
+  </div>
+
+  
+    <% legoSets.forEach(function(elem){ %>
+      <a href="localhost:3000/singleset/<%= elem.id %>">
+        <div class="row search_results">
+          <div class="col-md-3 result_img" >
+            <div class="sin_search_show">
+              <img src="<%= elem.img_sm%>" class="sin_search_img img-circle"  width="200" height="165" >
+            </div>
+          </div>
+           <div class="col-md-9 result_text" > 
+              <div class="sin_search_content">
+                <h2><%= elem.set_id+"--"+elem.descr %></h2> 
+                <br>
+                <h3><%= elem.theme+"  "+elem.year %></h3>
+                <br>
+                <p>3 users have this set </p>
+              </div>        
+            </div>      
+        </div>
+     </a>
+    <% }); %>
+   
+
+    <div class="row page_navi">
+      <div class="col-md-6">
+        <div class="numpages"><%= resultNo %>results found, showing page 1-20
+        </div>
+      </div>
+      <div class="col-md-6">
+        <ul class="pagination page_list">
+          <li><a href="#">1</a></li>
+          <li class="active"><a href="#">2</a></li>
+          <li><a href="#">3</a></li>
+          <li><a href="#">4</a></li>
+          <li><a href="#">5</a></li>
+        </ul>
+      </div>  
+    </div>
+
+</div>
+
+
+<% include footer %>

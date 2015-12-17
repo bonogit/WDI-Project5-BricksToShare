@@ -1,0 +1,147 @@
+html, body{
+  height: 100%
+}
+body{
+  
+  font: 12px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-image: url(/img/back2.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+     background-position: center;
+   margin-bottom: 80px;
+}
+
+
+
+.wrap{
+  min-height: 90%;
+
+  margin-left: 8%;
+  margin-right: 8%;
+  display: block;
+  border: 3px groove #a6a6a6;
+  border-radius: 8px;
+  background-color: rgba(153,153,153, 0.5);
+  color: black;
+}
+
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%
+  /* Set the fixed height of the footer here */
+  
+  background-color: black;
+  text-align: center;
+}
+/*---------index page---------------*/
+.heads{
+   width: 100%;
+   height: 400px;
+}
+.heads h1{
+  text-align: center;
+  margin-top: 10%;
+}
+.heads p {
+  text-align: left;
+  font-size: 15px;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+.heads_btns{
+  text-align: center;
+  margin-top: 14em;
+}
+.heads_log{
+  margin-right: 4%;
+}
+.heads_btns{
+  margin-left: 4%;
+}
+.post-text{
+  border-bottom: 2px groove #a6a6a6;
+}
+media-btns{
+  float: right;
+}
+
+.heads p{
+  font-size: 20px;
+}
+
+/*-----------------------------------*/
+
+/*------sets view page----------*/
+.sets_wrapper{
+  margin-left: 8%;
+  margin-right: 8%;
+  display: block;
+  border: 3px groove #a6a6a6;
+  background-color: #999999;
+}
+#search_panel{
+  background-color: #000;
+  border: #c9c9c9 solid thin;
+}
+
+.search_results{
+  border: #c9c9c9 solid thin;
+  border-radius: 5px;
+  background-color: #999999;
+}
+.search_results:hover{
+  box-shadow: 0 0 10px #ccc;
+}
+
+
+.sin_search_show{
+  width: 100%;
+  height: 100px;
+
+}
+.sin_search_img{
+  display: inline-block;
+}
+.sin_search_content{
+
+  display: inline-block;
+}
+#search_form{
+  padding: 10px 3px;
+
+}
+#inputsm{
+  display: inline-block;
+  width: 70%;
+}
+
+.numpages {
+  padding: 20px;
+}
+.page_list{
+  float: right;
+}
+/*----------------------------------*/
+
+/*--------single set--------*/
+.header h1{
+  text-align: center;
+}
+.single_details{
+  background: white;
+  border: 3px groove #a6a6a6;
+  border-radius: 8px;
+}
+
+.single_content{
+  height: 60%;
+}
+
+.single_btn {
+  text-align: center;
+}
+
+/*--------single set--------*/
+
