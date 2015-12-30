@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var models = require('../models/index');
+var passport = require('passport');
 
 /* GET home page. */
 
@@ -26,14 +27,8 @@ router.get('/setsview',function(req,res){
   });
 });
 
-router.post('/users', function(req, res) {
-  models.user.create({
-    email: req.body.email
-  }).then(function(user) {
-    res.json(user);
-  });
-});
 
+//show single set
 router.get('/singleset/:id',function(req,res){
   models.brickset.find({
     where: {
@@ -45,6 +40,58 @@ router.get('/singleset/:id',function(req,res){
     );
   });
 
+});
+
+//create user
+router.post('/users', function(req, res) {
+  models.user.create({
+    email: req.body.email
+  }).then(function(user) {
+    res.json(user);
+  });
+});
+
+//authentication(for testing)
+router.post('/login',
+  passport. authenticate('local',{
+    successRedirect:'/',
+    failureRedirect: '/login',
+    failureFlash: true
+  })
+  );
+router.get('/login',function(req,res){
+  res.render('login');
+});
+
+router.get('/profile', isLoggedIn, function(req, res) {
+        res.render('profile.ejs', {
+            user : req.user // get the user out of session and pass to template
+        });
+    });
+
+router.get('/logout', function(req, res) {
+        req.logout();
+        res.redirect('/');
+    });
+
+
+// route middleware to make sure a user is logged in
+function isLoggedIn(req, res, next) {
+
+    // if user is authenticated in the session, carry on 
+    if (req.isAuthenticated())
+        return next();
+
+    // if they aren't redirect them to the home page
+    res.redirect('/');
+}
+
+
+//authentication (for real)
+router.get('/signup',function(req,res){
+  res.render('signup'
+    // ,{message: req.flash('loginMessage')}
+    );
 });
 
 
