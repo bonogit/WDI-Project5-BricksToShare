@@ -8,49 +8,59 @@
   </div>
   <div class="row ">
       <div class="col-md-12 header">
-     <h1>LEGO Brick Set <%= singleset.set_id+"   "+singleset.descr%></h1>
+     <h1 >LEGO Brick Set <%= singleset.set_id+"   "+singleset.descr%></h1>
     </div>
   </div>
-  <div class="row single_content">
+  <div class="row single_content ">
     <div class="col-md-6 single_img">
      <img src="https://rebrickable.com/img/sets-b/60118-1.jpg" alt="" class="img-thumbnail">
     </div>
-    <div class="col-md-6 single_details">
-      <table class="table table-striped">
-          <thead>
+    <div class="col-md-6 ">
 
-          </thead>
-          <tbody>
-            <tr>
-              <td>Theme</td>
-              <td><%= singleset.theme %></td>
-            
-            </tr>
-            <tr>
-              <td>Year Released</td>
-              <td><%= singleset.year %></td>
-              
-            </tr>
-            <tr>
-              <td>Number of Parts</td>
-              <td>100</td>
-              
-            </tr>
-             <tr>
-              <td>Price</td>
-              <td>USD $20</td>
-            </tr>
-             <tr>
-              <td>Buy</td>
-              <td><a href="www.ebay.com">Ebay</a> <a href="www.lego.com">LEGO</a></td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="single_btn">
-          <button type="button" class="btn btn-primary active">Own to share</button>
-          <button type="button" class="btn btn-primary active">Look for sets</button>
-        </div>
-    </div>
+      <div class="single_details single_desc">
+        <h3>Set Details</h3>
+        <table class="table table-striped">
+            <thead>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Theme</td>
+                <td><%= singleset.theme %></td>
+              </tr>
+              <tr>
+                <td>Year Released</td>
+                <td><%= singleset.year %></td> 
+              </tr>
+              <tr>
+                <td>Number of Parts</td>
+                <td>100</td> 
+              </tr>
+               <tr>
+                <td>Price</td>
+                <td>USD $20</td>
+              </tr>
+               <tr>
+                <td>Buy</td>
+                <td><a href="www.ebay.com">Ebay</a> <a href="www.lego.com">LEGO</a></td>
+              </tr>
+            </tbody>
+          </table>
+
+       </div>
+    
+
+      <div class="single_details single_collection">
+          <h3>Collection</h3>
+          <div class="single_collection_data">
+            <p> >>>100 people own this set</p>
+            <p> >>>50  want this set</p> 
+          </div>
+          <div class="single_btn">
+            <button type="button" class="btn btn-primary active single_btn" id="single_own">Own to share</button>
+            <button type="button" class="btn btn-primary active single_btn" id="single_want">Want this set</button>
+          </div>
+       </div>
+
   </div>
 
 </div>

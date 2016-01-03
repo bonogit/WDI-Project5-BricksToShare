@@ -12,7 +12,7 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-        models.brickset.belongsToMany(models.user, { through: models.ownership });
+        models.brickset.belongsToMany(models.user, { through: models.ownership});
       }
     }
   });

@@ -8,10 +8,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userId: {
+      user_Id: {
         type: Sequelize.INTEGER
       },
-      bricksetId: {
+      brickset_Id: {
         type: Sequelize.INTEGER
       },
       set_id: {

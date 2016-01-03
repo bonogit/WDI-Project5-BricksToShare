@@ -12,7 +12,7 @@
     <div class="col-md-12" id="search_panel">
       <form action="" id="search_form">
         <span>Search Terms:</span>       
-         <input class="form-control input-lg" id="inputsm" type="text" placeholder="Search...">
+         <input class="form-control input-lg" id="inputsm" type="text" placeholder="Search By Theme...">
          <button type="button" class="btn btn-info btn-lg">Search</button>
        </form> 
     </div>
@@ -20,20 +20,17 @@
  
   <div class="row page_navi">
     <div class="col-md-6">
-      <div class="numpages"><%= resultNo %> results found, showing page 1-20</div>
+      <div class="numpages"><%= resultNo %> results found, showing 1-<%= Math.ceil(resultNo/10)%> pages</div>
     </div>
     <div class="col-md-6">
       <ul class="pagination page_list">
-        <li><a href="#">1</a></li>
-          <li class="active"><a href="#">2</a></li>
-          <li><a href="#">3</a></li>
-          <li><a href="#">4</a></li>
-          <li><a href="#">5</a></li>
-      </ul>
+         <% for (i=0;i<Math.ceil(resultNo/10);i+=1){%>
+          <li><a href="#"><%= i+1 %></a></li>
+         <% };%>
     </div>
   </div>
 
-  
+  <div class="search_content">
     <% legoSets.forEach(function(elem){ %>
       <a href="localhost:3000/singleset/<%= elem.id %>">
         <div class="row search_results">
@@ -44,32 +41,32 @@
           </div>
            <div class="col-md-9 result_text" > 
               <div class="sin_search_content">
-                <h2><%= elem.set_id+"--"+elem.descr %></h2> 
+
+                <h3><%= elem.set_id+"--"+elem.descr %></h3> 
                 <br>
-                <h3><%= elem.theme+"  "+elem.year %></h3>
+                <h4>Theme:&nbsp<%= elem.theme %></h4>
                 <br>
-                <p>3 users have this set </p>
+                <h4>Year:&nbsp<%= elem.year %></h4>
+                <br>
+                <p>3 users own this set || 2 users want this set </p>
               </div>        
             </div>      
         </div>
      </a>
     <% }); %>
+  </div>
    
 
     <div class="row page_navi">
       <div class="col-md-6">
-        <div class="numpages"><%= resultNo %>results found, showing page 1-20
-        </div>
+        <div class="numpages"><%= resultNo %> results found, showing 1-<%= Math.ceil(resultNo/10)%> pages</div>
       </div>
       <div class="col-md-6">
         <ul class="pagination page_list">
-          <li><a href="#">1</a></li>
-          <li class="active"><a href="#">2</a></li>
-          <li><a href="#">3</a></li>
-          <li><a href="#">4</a></li>
-          <li><a href="#">5</a></li>
-        </ul>
-      </div>  
+           <% for (i=0;i<Math.ceil(resultNo/10);i+=1){%>
+            <li><a href="#"><%= i+1 %></a></li>
+           <% };%>
+      </div>
     </div>
 
 </div>
