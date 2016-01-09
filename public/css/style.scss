@@ -148,6 +148,22 @@ media-btns{
 .page_list{
   float: right;
 }
+.sin_search_content h4, p{
+  color: #444;
+}
+.search_key_theme{
+  color: antiquewhite;
+  margin-top: 1em;
+}
+.search_key_theme a{
+  background-color: #337ab7;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  padding: 0.3em;
+  border-radius: 0.3em;
+  color: antiquewhite;
+}
+
 /*----------------------------------*/
 
 /*--------single set--------*/
@@ -158,6 +174,12 @@ media-btns{
   background: white;
   border: 3px groove #a6a6a6;
   border-radius: 8px;
+  color: #444;
+  margin-bottom: 10px;
+  padding-left: 1em;
+}
+.single_details h3{
+  text-align: center;
 }
 .single_desc{
   margin-bottom: 10px;
@@ -165,22 +187,18 @@ media-btns{
 .single_desc h3{
   text-align: center;
 }
-.single_collection{
-  margin-bottom: 10px;
-}
-.single_collection h3{
-  text-align: center;
-}
 .single_btn{
   margin: 10px 10px 10px 10px;
+  text-align: center;
+}
+#single_want{
+  margin-left: 10%;
 }
 .single_content{
   height: 60%;
 }
 
-.single_btn {
-  text-align: center;
-}
+
 
 /*--------single set end--------*/
 
@@ -360,9 +378,37 @@ media-btns{
   border: #c9c9c9 solid thin;
   border-radius: 5px;
   background-color: #999999;
-  margin: 0.8% 0.2% 0.8% 0.2%;
+  margin: 1em 1em;
 }
 .mysets_results:hover{
   box-shadow: 0 0 10px #ccc;
 }
+.mysets_search_content h3{
+  color: #444;
+}
+
+
+.mysets_collection{
+  background: white;
+  border: 3px groove #a6a6a6;
+  border-radius: 8px;
+  color: #444;
+  margin-bottom: 0.8em;
+  margin-top: 0.8em;
+  padding-left: 0.5em;
+}
+.mysets_collection h3{
+  text-align: center;
+}
+.delete_owninput{
+  height: 30px;
+  width: 20%;
+  margin-left: 5em;
+}
+.delete_ownership button{
+  margin-bottom: 0.8em;
+  height: 2em;
+  border-radius: 0.5em;
+}
+
 /*------my set end----*/

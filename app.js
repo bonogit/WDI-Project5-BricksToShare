@@ -1,11 +1,10 @@
-
-
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+
 
 var routes = require('./routes/index');
 var users = require('./routes/user');
@@ -32,8 +31,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.use('/', routes);
 app.use('/users', users);
@@ -71,11 +73,36 @@ app.use(function(err, req, res, next) {
         title: 'error'
     });
 });
-// required for passport
-app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
-app.use(passport.initialize());
-app.use(passport.session()); // persistent login sessions
-app.use(flash()); // use connect-flash for flash messages stored in session
 
+
+//load authentication and serialize user from another example
+// var user = require('./models/user');
+// passport.user(new LocalStrategy(user.authenticate()));
+// passport.serializeUser(user.serializeUser());
+// passport.deserializeUser(user.deserializeUser());
+
+//routes(from scotch.io example)
+// require('./routes/index')(app,passport);
+app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
+passport.use(new LocalStrategy(
+  function(username,password,cb){
+      if(err){return cb(err);}
+      if(!user){return cb(null, false);}
+      if(user.passport != password){return cb(null, false);}
+      return cb(null, user);
+ }));
+
+passport.serializeUser(function(user, cb) {
+  cb(null, user.id);
+});
+
+passport.deserializeUser(function(id, cb) {
+  db.users.findById(id, function (err, user) {
+    if (err) { return cb(err); }
+    cb(null, user);
+  });
+});
+app.use(passport.initialize());
+app.use(passport.session());
 
 module.exports = app;

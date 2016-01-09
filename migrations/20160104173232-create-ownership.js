@@ -8,14 +8,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      user_Id: {
+      userId: {
         type: Sequelize.INTEGER
       },
-      brickset_Id: {
+      bricksetId: {
         type: Sequelize.INTEGER
-      },
-      set_id: {
-        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

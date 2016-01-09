@@ -1,32 +1,17 @@
 'use strict';
 module.exports = {
   up: function(queryInterface, Sequelize) {
-    return queryInterface.createTable('bricksets', {
+    return queryInterface.createTable('users', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      set_id: {
+      email: {
         type: Sequelize.STRING
       },
-      descr: {
-        type: Sequelize.STRING
-      },
-      theme: {
-        type: Sequelize.STRING
-      },
-      year: {
-        type: Sequelize.INTEGER
-      },
-      img_tn: {
-        type: Sequelize.STRING
-      },
-      img_big: {
-        type: Sequelize.STRING
-      },
-      img_sm: {
+      password: {
         type: Sequelize.STRING
       },
       createdAt: {
@@ -40,6 +25,6 @@ module.exports = {
     });
   },
   down: function(queryInterface, Sequelize) {
-    return queryInterface.dropTable('bricksets');
+    return queryInterface.dropTable('users');
   }
 };

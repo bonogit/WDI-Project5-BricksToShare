@@ -1,6 +1,6 @@
 <% include header %>
 
-<div class="container-fluid wrap">
+<div class="container-fluid wrap" data-id="<%= singleset.id %>">
   <div class="row ">
     <div class="col-md-12">
      <h2>Detail for <%= singleset.set_id+"   "+singleset.descr%> </h2>
@@ -13,7 +13,7 @@
   </div>
   <div class="row single_content ">
     <div class="col-md-6 single_img">
-     <img src="https://rebrickable.com/img/sets-b/60118-1.jpg" alt="" class="img-thumbnail">
+     <img src="<%= singleset.img_big%>" alt="" class="img-thumbnail">
     </div>
     <div class="col-md-6 ">
 
@@ -49,16 +49,21 @@
        </div>
     
 
-      <div class="single_details single_collection">
+      <div class="single_details"  data-id='["<%= singleset.set_id%>","<%= singleset.descr%>","<%= singleset.theme%>","<%= singleset.year%>","<%= singleset.img_sm%>","<%= singleset.img_tn%>","<%= singleset.img_big%>"]'>
           <h3>Collection</h3>
           <div class="single_collection_data">
-            <p> >>>100 people own this set</p>
-            <p> >>>50  want this set</p> 
+            <h4>The Community</h4>
+            <p> >>> <span id='collection_own'><%= ownCount %></span>  people own this set</p>
+            <p> >>><span id='collection_want'><%= wantCount %></span>  want this set</p> 
+            <h4>Your collection</h4>
+            <p> >>>You own <span id='collection_youown'><%= checkOwnSum %></span> of this set</p>
           </div>
-          <div class="single_btn">
-            <button type="button" class="btn btn-primary active single_btn" id="single_own">Own to share</button>
-            <button type="button" class="btn btn-primary active single_btn" id="single_want">Want this set</button>
-          </div>
+          <form action="">
+            <div class="single_btn">
+              <button type="button" class="btn btn-primary active single_btn" id="single_own">I Own It</button>
+              <button type="button" class="btn btn-primary active single_btn" id="single_want">I Want It</button>
+            </div>
+          </form>
        </div>
 
   </div>

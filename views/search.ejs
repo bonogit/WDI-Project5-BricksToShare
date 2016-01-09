@@ -1,0 +1,98 @@
+<% include header %>
+
+<div class="container-fluid wrap">
+
+  <div class="row">
+    <div class="col-md-12">
+     <h2>Brick Sets Search Result</h2>
+    </div>
+  </div>
+
+  <div class="row search">
+    <div class="col-md-12" id="search_panel">
+      <form action="/search" role='form' method='GET' id="search_form" >
+        <span>Search Terms:</span>       
+         <input class="form-control input-lg" id="inputsm" name="key" type="text" placeholder="Search By Theme...">
+         <button type="submit" class="btn btn-info btn-lg search_btn ">Search</button>
+
+         <div class="search_key_theme">
+            Search Result For Theme:
+              <a href="#" class="themeKey"><%= themeName %></a>
+          </div>
+
+       </form> 
+    </div>
+  </div>
+ 
+  <div class="row page_navi">
+    <div class="col-md-6">
+      <div class="numpages"><%= resultNo %> results found, showing 1-<%= Math.ceil(resultNo/10)%> pages</div>
+    </div>
+    <div class="col-md-6">
+      <ul class="pagination page_list">
+         <% for (i=0;i<Math.ceil(resultNo/10);i+=1){%>
+          <li><a href="#"><%= i+1 %></a></li>
+         <% };%>
+    </div>
+  </div>
+
+  <div class="search_content">
+    <% if (resultNo>0) {%>
+      <% dataByTheme.forEach(function(elem){ %>
+        <a href="localhost:3000/singleset/<%= elem.id %>">
+          <div class="row search_results">
+            <div class="col-md-3 result_img" >
+              <div class="sin_search_show">
+                <img src="<%= elem.img_sm%>" class="sin_search_img img-circle"  width="200" height="165" >
+              </div>
+            </div>
+             <div class="col-md-9 result_text" > 
+                <div class="sin_search_content">
+
+                  <h3><%= elem.set_id+"--"+elem.descr %></h3> 
+                  <br>
+                  <h4>Theme:&nbsp<%= elem.theme %></h4>
+                  <br>
+                  <h4>Year:&nbsp<%= elem.year %></h4>
+                  <br>
+                  <p></p>
+                </div>        
+              </div>      
+          </div>
+       </a>
+      <% }); %>
+    <% } else{ %>
+            <div class="row search_results">
+              <div class="col-md-3 result_img" >
+                <div class="sin_search_show">
+                  <img src="http://unbxd.com/blog/wp-content/uploads/2014/02/No-results-found.jpg" class="sin_search_img img-rounded"  width="200" height="80" >
+                </div>
+              </div>
+               <div class="col-md-9 result_text" > 
+                  <div class="sin_search_content">
+
+                    <h3>Opps...Result Not Found!</h3> 
+                   
+                  </div>        
+                </div>      
+            </div>
+    <% } %>
+  </div>
+   
+
+    <div class="row page_navi">
+      <div class="col-md-6">
+        <div class="numpages"><%= resultNo %> results found, showing 1-<%= Math.ceil(resultNo/10)%> pages</div>
+      </div>
+      <div class="col-md-6">
+        <ul class="pagination page_list">
+           <% for (i=0;i<Math.ceil(resultNo/10);i+=1){%>
+            <li><a href="#"><%= i+1 %></a></li>
+           <% };%>
+      </div>
+    </div>
+
+</div>
+
+
+<% include footer %>

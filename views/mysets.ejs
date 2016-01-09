@@ -2,58 +2,90 @@
 <div class="container-fluid wrap">
     <div class="row">
         <div class="col-md-12">
-          <h2>Sets Owned</h2>
+          <h2>My Collection Of Sets </h2>
         </div>
     </div>
 
     <div class="row page_navi">
       <div class="col-md-6">
         <div class="numpages">
-          100 results found, showing page 1-5
+          <%= recordCount %> results found, showing page 1-<%= Math.ceil(recordCount/10)%>
         </div>
       </div>  
       <div class="col-md-6">
         <ul class="pagination page_list">
-            <li><a href="#">1</a></li>
-            <li class="active"><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
+          <% for (i=0;i<Math.ceil(recordCount/10);i+=1){%>
+            <li><a href="#"><%= i+1 %></a></li>
+          <% };%>
         </ul>
       </div>
     </div>
 
     <div class="row mysets">
-      <a href="#">
-        <div class="row mysets_results">
-          <div class="col-md-3 mysets_img" >
-            <div class="mysets_search_show">
-              <img src="#" class="sin_search_img img-circle"  width="200" height="165" >
+      <% ownData.forEach(function(elem){%>
+        <a href="localhost:3000/singleset/<%= elem.id %>" class='mysets_record'>
+          <div class="row mysets_results">
+            <div class="col-md-3 mysets_img" >
+              <div class="mysets_search_show">
+                <img src="<%= elem.img_sm%>" class="sin_search_img img-circle"  width="200" height="165" >
+              </div>
             </div>
+             <div class="col-md-6 mysets_text" > 
+                <div class="mysets_search_content">
+                  <h2><%= elem.set_id+"  "+elem.descr %></h2> 
+                  <br>
+                  <h3>Theme: &nbsp <%= elem.theme %></h3>
+                  <h3>Year: &nbsp <%= elem.year %></h3>
+                </div>        
+              </div> 
+             <div class="col-md-3 mysets_other">
+                <div class="mysets_collection">
+                    <h3>Collection</h3>
+                    <div class="single_collection_data" data-id='<%= elem.bricksetId %>'>
+                      <h4>Your collection</h4>
+                      <form class='delete_ownership' action="" data-id='<%= elem.id%>'>
+                        <p> >>>I own this set</p>
+                        <button type='button' class="delete_ownorwantbtn">Remove Owning</button>
+                      </form>
+                    </div>
+                 </div>
+              </div>      
           </div>
-           <div class="col-md-6 mysets_text" > 
-              <div class="mysets_search_content">
-                <h2>10248: Ferrari F40</h2> 
-                <br>
-                <h3>ADVANCED MODELS 2015</h3>
-              </div>        
-            </div> 
-           <div class="col-md-3 mysets_other">
-              <div class="single_details single_collection">
-                  <h3>Collection</h3>
-                  <div class="single_collection_data">
-                    <p> >>>100 people own this set</p>
-                    <p> >>>50  want this set</p> 
-                  </div>
-                  <div class="single_btn">
-                    <button type="button" class="btn active">Own to share</button>
-                    <button type="button" class="btn active">Want this set</button>
-                  </div>
-               </div>
-           </div>      
-        </div>
-     </a>
+        </a>
+      <% }); %>
+      <% wantData.forEach(function(elem){%>
+        <a href="localhost:3000/singleset/<%= elem.id %>" class='mysets_record'>
+          <div class="row mysets_results">
+            <div class="col-md-3 mysets_img" >
+              <div class="mysets_search_show">
+                <img src="<%= elem.img_sm%>" class="sin_search_img img-circle"  width="200" height="165" >
+              </div>
+            </div>
+             <div class="col-md-6 mysets_text" > 
+                <div class="mysets_search_content">
+                  <h2><%= elem.set_id+"  "+elem.descr %></h2> 
+                  <br>
+                  <h3>Theme: &nbsp <%= elem.theme %></h3>
+                  <h3>Year: &nbsp <%= elem.year %></h3>
+                </div>        
+              </div> 
+             <div class="col-md-3 mysets_other">
+                <div class="mysets_collection">
+                    <h3>Collection</h3>
+                    <div class="single_collection_data" data-id='<%= elem.bricksetId %>'>
+                      <h4>Your collection</h4>
+                      <form class='delete_ownership' action="" data-id='<%= elem.id%>'>
+                        <p> >>>I want this set</p>
+                        <button type="button" class="delete_ownorwantbtn">Remove Wanting</button>
+                      </form>
+                    </div>
+                 </div>
+              </div>      
+          </div>
+        </a>
+      <% }); %>
     </div>
+
 
 
 

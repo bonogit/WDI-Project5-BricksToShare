@@ -8,9 +8,9 @@ var dataset = {};
     };
 
     $.ajax(options).done(function(data){
-      legoSets = data.results.slice(0,19);
+      legoSets = data.results.slice(0,30);
       console.log(legoSets);
-     for (var i = 0; i<10; i++) {
+     for (var i = 10; i<20; i++) {
       $.ajax({
         type: "POST",
         url: 'http://localhost:3000/brickset',

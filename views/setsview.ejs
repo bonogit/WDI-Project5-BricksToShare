@@ -10,10 +10,38 @@
 
   <div class="row search">
     <div class="col-md-12" id="search_panel">
-      <form action="" id="search_form">
+      <form action="/search" role='form' method='GET' id="search_form" >
         <span>Search Terms:</span>       
-         <input class="form-control input-lg" id="inputsm" type="text" placeholder="Search By Theme...">
-         <button type="button" class="btn btn-info btn-lg">Search</button>
+         <input class="form-control input-lg" id="inputsm" name="key" type="text" placeholder="Search By Theme...">
+         <button type="submit" class="btn btn-info btn-lg search_btn ">Search</button>
+          <div class="search_key_theme">
+            List Of Theme:
+
+            <% var themes=[];
+            themeTag.forEach(function(elem){
+               themes.push(elem.theme);
+             }); %>
+             <% var themesUniq = themes.filter(function(elem, pos) {
+                return themes.indexOf(elem) == pos;
+                 });  %>
+             <% themesUniq.forEach(function(elem){%>
+              <a href="#" class="themeKey"><%= elem %></a>
+              <% }); %>
+          </div>
+          <div class="search_key_theme">
+            List Of Year:
+
+            <% var years=[];
+            legoSets.forEach(function(elem){
+               years.push(elem.year);
+             }); %>
+             <% var yearsUniq = years.filter(function(elem, pos) {
+                return years.indexOf(elem) == pos;
+                 });  %>
+             <% yearsUniq.forEach(function(elem){%>
+              <a href="#" >2016</a>
+              <% }); %>                         
+          </div>
        </form> 
     </div>
   </div>
@@ -25,7 +53,7 @@
     <div class="col-md-6">
       <ul class="pagination page_list">
          <% for (i=0;i<Math.ceil(resultNo/10);i+=1){%>
-          <li><a href="#"><%= i+1 %></a></li>
+          <li><a href="/setsview/<%= i+1%>"><%= i+1 %></a></li>
          <% };%>
     </div>
   </div>
@@ -48,7 +76,7 @@
                 <br>
                 <h4>Year:&nbsp<%= elem.year %></h4>
                 <br>
-                <p>3 users own this set || 2 users want this set </p>
+                <p></p>
               </div>        
             </div>      
         </div>
@@ -64,7 +92,7 @@
       <div class="col-md-6">
         <ul class="pagination page_list">
            <% for (i=0;i<Math.ceil(resultNo/10);i+=1){%>
-            <li><a href="#"><%= i+1 %></a></li>
+            <li><a href="/setsview/<%= i+1%>" ><%= i+1 %></a></li>
            <% };%>
       </div>
     </div>

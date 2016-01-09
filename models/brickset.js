@@ -6,13 +6,28 @@ module.exports = function(sequelize, DataTypes) {
     theme: DataTypes.STRING,
     year: DataTypes.INTEGER,
     img_tn: DataTypes.STRING,
+    img_sm: DataTypes.STRING,
     img_big: DataTypes.STRING,
-    img_sm: DataTypes.STRING
+    own: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
+    want: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
+    counter: {
+      type: DataTypes.INTEGER,
+      defaultValue: 1
+    }
   }, {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-        models.brickset.belongsToMany(models.user, { through: models.ownership});
+        brickset.belongsToMany(models.user, {
+          through: "ownership",
+          foreignKey: "bricksetId"
+        });
       }
     }
   });
