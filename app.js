@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 
 
 var routes = require('./routes/index');
-var users = require('./routes/user');
+// var users = require('./routes/user');
 
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
@@ -38,7 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', routes);
-app.use('/users', users);
+// app.use('/users', users);
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -84,25 +84,9 @@ app.use(function(err, req, res, next) {
 //routes(from scotch.io example)
 // require('./routes/index')(app,passport);
 app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
-passport.use(new LocalStrategy(
-  function(username,password,cb){
-      if(err){return cb(err);}
-      if(!user){return cb(null, false);}
-      if(user.passport != password){return cb(null, false);}
-      return cb(null, user);
- }));
-
-passport.serializeUser(function(user, cb) {
-  cb(null, user.id);
-});
-
-passport.deserializeUser(function(id, cb) {
-  db.users.findById(id, function (err, user) {
-    if (err) { return cb(err); }
-    cb(null, user);
-  });
-});
 app.use(passport.initialize());
 app.use(passport.session());
+
+
 
 module.exports = app;

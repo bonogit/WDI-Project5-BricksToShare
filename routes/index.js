@@ -1,8 +1,10 @@
 var express = require('express');
+var app = express();
+
 var router = express.Router();
 var models = require('../models/index');
 var passport = require('passport');
-var Strategy = require('passport-local').Strategy;
+var LocalStrategy = require('passport-local').Strategy;
 // require('../config/passport')(passport);
 
 
@@ -334,12 +336,54 @@ router.post('/brickset', function(req, res) {
 //     );
 // });
 
+// authentication set up
+app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new LocalStrategy({
+  usernameField: 'username',
+  passwordField: 'password'
+  },
+  function(username,password,cb){
+    console.log('input user and password are: '+username+password);
+    models.user.findOne({where: {email: username}}).then(function(user, err){
+      if(err){
+        console.log('general err: '+err);
+        return cb(err);
+      }
+      if(!user){
+        console.log('user doesnot exist');
+        return cb(null, false, {message: 'Incorrect username'});
+      }
+      if(user.password != password){
+        console.log('user password not correct');
+        return cb(null, false);
+      }
+      console.log('username and password checked!');
+      return cb(null, user);
+    });
+  }
+ ));
+
+passport.serializeUser(function(user, cb) {
+  cb(null, user.id);
+});
+
+passport.deserializeUser(function(id, cb) {
+  models.user.findById(id, function (err, user) {
+    if (err) { return cb(err); }
+    cb(null, user);
+  });
+});
+
 router.get('/signup',function(req,res){
   res.render('signup');
 });
 
 router.post('/signup',
-  passport.authenticate('local',{failureRedirect:'/error'}),
+  passport.authenticate('local',{failureRedirect:'/dataCollector'
+  }),
   function(req,res){
     res.redirect('/');
 });
@@ -351,6 +395,8 @@ router.get('/users', function(req, res) {
   res.json(userData);
   });
 });
+
+
 
 module.exports = router;
 
