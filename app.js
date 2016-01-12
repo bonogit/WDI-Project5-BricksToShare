@@ -36,6 +36,9 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', routes);
 // app.use('/users', users);
@@ -83,9 +86,7 @@ app.use(function(err, req, res, next) {
 
 //routes(from scotch.io example)
 // require('./routes/index')(app,passport);
-app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
-app.use(passport.initialize());
-app.use(passport.session());
+
 
 
 

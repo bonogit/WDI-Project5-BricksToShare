@@ -17,12 +17,12 @@ router.get('/', function(req, res, next) {
 
   models.brickset.findAll({
     attributes:['set_id','descr','img_sm'
-    // ,[models.fn('COUNT',models.col('counter')),'count']
+    ,[models.sequelize.fn('COUNT',models.sequelize.col('counter')),'count']
     ],
     // order: ['count', 'DESC'],
     limit: 10,
     group: ['set_id','descr','img_sm'],
-    // where: { $or: [{own: true},{want: true}]},
+    where: { $or: [{own: true},{want: true}]},
     where: {want: true},
   }).then(function(topSets){
     models.brickset.findAll({
@@ -337,9 +337,9 @@ router.post('/brickset', function(req, res) {
 // });
 
 // authentication set up
-app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 passport.use(new LocalStrategy({
   usernameField: 'username',
@@ -382,11 +382,9 @@ router.get('/signup',function(req,res){
 });
 
 router.post('/signup',
-  passport.authenticate('local',{failureRedirect:'/dataCollector'
-  }),
-  function(req,res){
-    res.redirect('/');
-});
+  passport.authenticate('local',{failureRedirect:'/dataCollector',
+    successRedirect : '/', // redirect to the secure profile section
+  }));
 
 
 router.get('/users', function(req, res) {
