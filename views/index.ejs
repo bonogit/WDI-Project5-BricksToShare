@@ -8,12 +8,12 @@
           <h1>Wellcome to Bricks2Share</h1>
           <p>There are over 13700 sets in LEGO bricks.Bricks2Share is a place to share latest brick sets news with other lego lovers and track the most favorite brick sets!</p>
           <div class="heads_btns">
-            <a href="#" class="btn btn-primary btn-lg active heads_log" data-toggle="modal" data-target="#logModal" role="button">Log In</a> 
+            <a href="/users/signup" class="btn btn-primary btn-lg active heads_log" data-toggle="modal" data-target="#logModal" role="button">Log In</a> 
                   <!-- Modal -->
-            <div class="modal fade" id="logModal" role="dialog">
-              <div class="modal-dialog">
+    <!--         <div class="modal fade" id="logModal" role="dialog">
+              <div class="modal-dialog"> -->
                 <!-- Modal content-->
-                <div class="modal-content">
+               <!--  <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Log In</h4>
@@ -49,15 +49,16 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
+            <!-- modal1 end here -->
 
-            <a href="#" class="btn btn-primary btn-lg active head_submit" data-toggle="modal" data-target="#signupModal" role="button">Sign up</a>
+            <a href="/users/signup" class="btn btn-primary btn-lg active head_submit" data-toggle="modal" data-target="#signupModal" role="button">Sign up</a>
             <!-- Modal -->
-            <div class="modal fade" id="signupModal" role="dialog">
+           <!--  <div class="modal fade" id="signupModal" role="dialog">
               <div class="modal-dialog">
-              
+               -->
                 <!-- Modal content-->
-                <div class="modal-content">
+                <!-- <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Sign Up</h4>
@@ -65,45 +66,45 @@
                   <div class="modal-body">
                      <form class="form-horizontal" action='' method="POST">
                       <fieldset>
-                        <div class="control-group">
+                        <div class="control-group"> -->
                           <!-- Username -->
-                          <label class="control-label"  for="username">Username</label>
+                         <!--  <label class="control-label"  for="username">Username</label>
                           <div class="controls">
                             <input type="text" id="username" name="username" placeholder="" class="input-xlarge">
                             <p class="help-block">Username can contain any letters or numbers, without spaces</p>
                           </div>
                         </div>
                      
-                        <div class="control-group">
+                        <div class="control-group"> -->
                           <!-- E-mail -->
-                          <label class="control-label" for="email">E-mail</label>
+                        <!--   <label class="control-label" for="email">E-mail</label>
                           <div class="controls">
                             <input type="text" id="email" name="email" placeholder="" class="input-xlarge">
                             <p class="help-block">Please provide your E-mail</p>
                           </div>
                         </div>
                      
-                        <div class="control-group">
+                        <div class="control-group"> -->
                           <!-- Password-->
-                          <label class="control-label" for="password">Password</label>
+                       <!--    <label class="control-label" for="password">Password</label>
                           <div class="controls">
                             <input type="password" id="password" name="password" placeholder="" class="input-xlarge">
                             <p class="help-block">Password should be at least 4 characters</p>
                           </div>
                         </div>
                      
-                        <div class="control-group">
+                        <div class="control-group"> -->
                           <!-- Password -->
-                          <label class="control-label"  for="password_confirm">Password (Confirm)</label>
+                          <!-- <label class="control-label"  for="password_confirm">Password (Confirm)</label>
                           <div class="controls">
                             <input type="password" id="password_confirm" name="password_confirm" placeholder="" class="input-xlarge">
                             <p class="help-block">Please confirm password</p>
                           </div>
                         </div>
                      
-                        <div class="control-group">
+                        <div class="control-group"> -->
                           <!-- Button -->
-                          <div class="controls">
+                  <!--         <div class="controls">
                             <button class="btn btn-success">Register</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                           </div>
@@ -113,8 +114,8 @@
                     </div>
                   </div>
                 </div>
-              </div>
-
+              </div> -->
+             <!-- modal 2 ends here -->
           </div>
         </div>
       </div>
@@ -217,26 +218,25 @@
 
 
         <div class="col-xs-6 col-md-4 content_right">
-          <h3>Top 10 most wanted brick sets</h3>
+          <h3>Top 10 brick sets</h3>
           <ul class="nav nav-tabs" style="margin-bottom:5px font-size: 1em color: black">
-            <li id="all"><a href="#">All Time</a></li>
-            <li id="theme"><a href="#">By Theme</a></li>
+            <li id="all"><a href="#">Most Wanted</a></li>
+            <li id="theme"><a href="#">Most Owning</a></li>
           </ul>
           <div class="list-group">
-            <% topSets.forEach(function(elem){ %>
-            <a href="localhost:3000/singleset/<%= elem.id %>" class="list-group-item ">
-              <img src="<%= elem.img_sm%>" alt=""  width="40px" height="40px" background-color="gray">
-              <%= elem.descr+"   "+ elem.set_id %>
-            </a>
+            <% topWantSets.forEach(function(elem){ %>
+              <a href="#" class="list-group-item ">
+                <img src="<%= elem.img_sm%>" alt=""  width="40px" height="40px" background-color="gray">
+                <%= elem.descr+"   "+ elem.set_id %>
+              </a>
             <% }); %>
          </div>
            <div class="list-group_theme" >
-            <% topSetsTheme.forEach(function(elem){ %>
-            <a href="localhost:3000/singleset/<%= elem.id %>" class="list-group-item ">
-              <img src="<%= elem.img_sm%>" alt=""  width="40px" height="40px" background-color="gray">
-              <%= elem.descr+"   "+ elem.set_id %>
-              (theme)
-            </a>
+            <% topOwnSets.forEach(function(elem){ %>
+              <a href="#" class="list-group-item ">
+                <img src="<%= elem.img_sm%>" alt=""  width="40px" height="40px" background-color="gray">
+                <%= elem.descr+"   "+ elem.set_id %>
+              </a>
             <% }); %>
          </div>
 </div>

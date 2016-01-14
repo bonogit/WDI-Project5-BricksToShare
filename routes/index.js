@@ -1,6 +1,4 @@
 var express = require('express');
-var app = express();
-
 var router = express.Router();
 var models = require('../models/index');
 var passport = require('passport');
@@ -11,6 +9,18 @@ var LocalStrategy = require('passport-local').Strategy;
 //for include syntax
 var userModel = models.user;
 
+
+
+  // if user is authenticated in the session, call the next() to call the next request handler 
+  // Passport adds this method to request object. A middleware is allowed to add properties to
+  // request and response objects
+var isAuthenticated = function (req, res, next) {
+  if (req.isAuthenticated())
+    return next();
+  // if the user is not authenticated then redirect him to the login page
+  res.redirect('/');
+}
+
 /* GET home page. */
 
 router.get('/', function(req, res, next) {
@@ -19,30 +29,33 @@ router.get('/', function(req, res, next) {
     attributes:['set_id','descr','img_sm'
     ,[models.sequelize.fn('COUNT',models.sequelize.col('counter')),'count']
     ],
-    // order: ['count', 'DESC'],
+    order: 'count DESC',
     limit: 10,
-    group: ['set_id','descr','img_sm'],
-    where: { $or: [{own: true},{want: true}]},
+    group: ['set_id','descr','img_sm',],
+    // where: { $or: [{own: true},{want: true}]},
     where: {want: true},
-  }).then(function(topSets){
+  }).then(function(topWantSets){
     models.brickset.findAll({
-      order: 'theme',
+      attributes:['set_id','descr','img_sm'
+      ,[models.sequelize.fn('COUNT',models.sequelize.col('counter')),'count']      
+      ],
+      // order: ['count'],
       limit: 10,
-    where: { $or: [{own: true},{want: true}]},
-    include: [{
-          model: userModel
-        }]
-    }).then(function(topSetsTheme){
+      group: ['set_id','descr','img_sm'],
+      order: 'count DESC',
+      where: {own: true}
+    }).then(function(topOwnSets){
       res.render('index',{
-        topSets: topSets,
-        topSetsTheme: topSetsTheme
+        topWantSets: topWantSets,
+        topOwnSets: topOwnSets
       });
     });
   });  
 });
 
 //page for sets view
-router.get('/setsview',function(req,res){
+router.get('/setsview',isAuthenticated,function(req,res){
+  
   models.brickset.count({
     where:{$and: [{own: false},{want: false}]}
   }).then(function(countSum){
@@ -55,6 +68,7 @@ router.get('/setsview',function(req,res){
       limit: 10,
       offset: 0
      }).then(function(legoSets){
+        console.log('current user iddfdfdfffffff: '+req.user);
         res.render('setsview',{
             legoSets: legoSets.rows,
             resultNo: countSum,
@@ -257,142 +271,9 @@ router.post('/brickset', function(req, res) {
   });
 });
 
-//authentication(for testing)
-// router.post('/login',
-//   passport. authenticate('local',{
-//     successRedirect:'/',
-//     failureRedirect: '/login',
-//     failureFlash: true
-//   })
-//   );
-
-//a testing page for associate models
-// router.get('/login',function(req,res){
-//   var temp = models.user;
-//   models.brickset.findAll({
-//     where: {id: 2},
-//     include: [{
-//       model: temp,
-//       where: { id: 1 }
-//     }]
-      
-//   }).then(function(data){    
-//       res.json(data);
-//     // res.render('login',{
-//     //   data: data
-//     // });
-//   });
-// });
-
-// //create user
-// router.post('/users', function(req, res) {
-//   models.user.create({
-//     email: req.body.email
-//   }).then(function(user) {
-//     res.json(user);
-//   });
-// });
-
-// router.get('/profile', isLoggedIn, function(req, res) {
-//         res.render('profile.ejs', {
-//             user : req.user // get the user out of session and pass to template
-//         });
-//     });
-
-// router.get('/logout', function(req, res) {
-//         req.logout();
-//         res.redirect('/');
-//     });
 
 
-// // route middleware to make sure a user is logged in
-// function isLoggedIn(req, res, next) {
 
-//     // if user is authenticated in the session, carry on 
-//     if (req.isAuthenticated())
-//         return next();
-
-//     // if they aren't redirect them to the home page
-//     res.redirect('/');
-// }
-
-// router.post('/signup',passport.authenticate('local-signup',{
-//   successRedirect : '/profile',
-//   failureRedirect : '/signup',
-//   failureFlash : true //allow flash messages
-// }));
-
-// process the login form
-// router.post('/login', passport.authenticate('local-login', {
-//     successRedirect : '/profile', // redirect to the secure profile section
-//     failureRedirect : '/login', // redirect back to the signup page if there is an error
-//     failureFlash : true // allow flash messages
-// }));
-
-//authentication (for real)
-// router.get('/signup',function(req,res){
-//   res.render('signup'
-//     // ,{message: req.flash('loginMessage')}
-//     );
-// });
-
-// authentication set up
-// app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
-// app.use(passport.initialize());
-// app.use(passport.session());
-
-passport.use(new LocalStrategy({
-  usernameField: 'username',
-  passwordField: 'password'
-  },
-  function(username,password,cb){
-    console.log('input user and password are: '+username+password);
-    models.user.findOne({where: {email: username}}).then(function(user, err){
-      if(err){
-        console.log('general err: '+err);
-        return cb(err);
-      }
-      if(!user){
-        console.log('user doesnot exist');
-        return cb(null, false, {message: 'Incorrect username'});
-      }
-      if(user.password != password){
-        console.log('user password not correct');
-        return cb(null, false);
-      }
-      console.log('username and password checked!');
-      return cb(null, user);
-    });
-  }
- ));
-
-passport.serializeUser(function(user, cb) {
-  cb(null, user.id);
-});
-
-passport.deserializeUser(function(id, cb) {
-  models.user.findById(id, function (err, user) {
-    if (err) { return cb(err); }
-    cb(null, user);
-  });
-});
-
-router.get('/signup',function(req,res){
-  res.render('signup');
-});
-
-router.post('/signup',
-  passport.authenticate('local',{failureRedirect:'/dataCollector',
-    successRedirect : '/', // redirect to the secure profile section
-  }));
-
-
-router.get('/users', function(req, res) {
-  models.user.findAll({
-  }).then(function(userData){
-  res.json(userData);
-  });
-});
 
 
 
