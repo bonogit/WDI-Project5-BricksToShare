@@ -24,7 +24,7 @@
 
     <div class="row mysets">
       <% ownData.forEach(function(elem){%>
-        <a href="localhost:3000/singleset/<%= elem.id %>" class='mysets_record'>
+        <a href="/singleset/<%= elem.id %>" class='mysets_record'>
           <div class="row mysets_results">
             <div class="col-md-3 mysets_img" >
               <div class="mysets_search_show">
@@ -55,7 +55,7 @@
         </a>
       <% }); %>
       <% wantData.forEach(function(elem){%>
-        <a href="localhost:3000/singleset/<%= elem.id %>" class='mysets_record'>
+        <a href="/singleset/<%= elem.id %>" class='mysets_record'>
           <div class="row mysets_results">
             <div class="col-md-3 mysets_img" >
               <div class="mysets_search_show">
