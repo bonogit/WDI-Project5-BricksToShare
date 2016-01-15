@@ -24,7 +24,7 @@ $('#single_own').on('click',function(){
    // console.log('test on output set id:'+singlesetId+" "+singleset_setid);
   $.ajax({
       type: "POST",
-      url: 'http://localhost:3000/singleset/own',
+      url: '/singleset/own',
       dataType:'json',
       data:{
         singleset_id: singlesetId,
@@ -56,7 +56,7 @@ $('#single_want').on('click',function(){
    // console.log('test on output set id:'+singlesetId+" "+singleset_setid);
   $.ajax({
       type: "POST",
-      url: 'http://localhost:3000/singleset/want',
+      url: '/singleset/want',
       dataType:'json',
       data:{
         singleset_id: singlesetId,
@@ -83,7 +83,7 @@ $('.delete_ownorwantbtn').on('click',function(){
   var setDeleteId = parseInt($(this).closest('.delete_ownership').data('id'));
   var options = {
     type: 'delete',
-    url: 'http://localhost:3000/mysets/deleteOwnOrWant',
+    url: '/mysets/deleteOwnOrWant',
     dataType: 'json',
     data: { setDeleteId: setDeleteId}
   };
