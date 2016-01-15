@@ -13,7 +13,7 @@ var dataset = {};
      for (var i = 10; i<20; i++) {
       $.ajax({
         type: "POST",
-        url: 'http://localhost:3000/brickset',
+        url: '/brickset',
         dataType: 'json',
         data: {
           // legoSets : legoSets
