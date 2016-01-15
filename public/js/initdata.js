@@ -3,14 +3,14 @@ var dataset = {};
   $('#getData').on('click',function(){
     var options = {
       type: "GET",
-      url: 'http://rebrickable.com/api/search?key=oXVdrXnWqv&format=json&type=S',
+      url: 'https://rebrickable.com/api/search?key=oXVdrXnWqv&format=json&type=S',
       dataType: 'json'
     };
 
     $.ajax(options).done(function(data){
       legoSets = data.results.slice(0,30);
       console.log(legoSets);
-     for (var i = 10; i<20; i++) {
+     for (var i = 0; i<30; i++) {
       $.ajax({
         type: "POST",
         url: '/brickset',
