@@ -55,7 +55,7 @@ router.get('/', function(req, res, next) {
 
 //page for sets view
 router.get('/setsview',isAuthenticated,function(req,res){
-  
+  console.log('current user check!', req.session.passport.user.id);
   models.brickset.count({
     where:{$and: [{own: false},{want: false}]}
   }).then(function(countSum){

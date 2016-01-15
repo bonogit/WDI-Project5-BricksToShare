@@ -85,7 +85,7 @@ module.exports = function(passport){
   //render page for signin
   router.post('/signin',
     passport.authenticate('login',{failureRedirect:'/dataCollector',
-      successRedirect : '/mysets', // redirect to the secure profile section
+      successRedirect : '/setsview', // redirect to the secure profile section
       failureFlash: true
     }));
 
