@@ -78,6 +78,7 @@ media-btns{
 .list-group, .list-group_theme{
   margin-left: 0.5em;
   margin-right: 0.5em;
+  margin-top: 0.3em;
 }
 .extended{
   float: right;
@@ -87,6 +88,16 @@ media-btns{
 }
 .media-box {
   margin-left: 0.5em;
+}
+.index_tabimg{
+  width: 40px;
+  height: 40px;
+  background-color: gray;
+  display: inline-block;
+}
+.index_tabtext{
+  display: inline-block;
+  vertical-align: middle;
 }
 
 /*-----------------------------------*/
@@ -231,7 +242,7 @@ media-btns{
   z-index: 2;
 }
 .form-login input[type="email"] {
-  margin-bottom: -1px;
+  margin-bottom: 0.2em;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
@@ -239,6 +250,10 @@ media-btns{
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+.loginlabel{
+  font-family: inherit;
+  font-size: 1.1em;
 }
 /*--------log in page end------*/
 
@@ -411,4 +426,24 @@ media-btns{
   border-radius: 0.5em;
 }
 
+.myset_search_img{
+  display: inline-block;
+  margin-top: 4%;
+  margin-bottom: 3%
+}
+
 /*------my set end----*/
+
+/*-----media story update----*/
+.media_form{
+  width: 70%;
+  height: auto;
+  margin-left: 10em;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  border-style: dashed;
+  border-color: wheat;
+  border-radius: 5px;
+  padding: 1em;
+}
+/*-----media story end ------*/

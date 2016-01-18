@@ -1,6 +1,6 @@
-<% include header %>
+<% include headerAll %>
 
-<div class="container-fluid wrap" data-id="<%= singleset.id %>">
+<div class="container-fluid wrap" data-id="[<%= singleset.id %>,<%= currentUserId %>]">
   <div class="row ">
     <div class="col-md-12">
      <h2>Detail for <%= singleset.set_id+"   "+singleset.descr%> </h2>
@@ -24,24 +24,24 @@
             </thead>
             <tbody>
               <tr>
-                <td>Theme</td>
+                <td><span class="glyphicon glyphicon-star" aria-hidden="true"></span>Theme</td>
                 <td><%= singleset.theme %></td>
               </tr>
               <tr>
-                <td>Year Released</td>
+                <td><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>Year Released</td>
                 <td><%= singleset.year %></td> 
               </tr>
               <tr>
-                <td>Number of Parts</td>
+                <td><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>Number of Parts</td>
                 <td>100</td> 
               </tr>
                <tr>
-                <td>Price</td>
+                <td><span class="glyphicon glyphicon-usd" aria-hidden="true"></span>Price</td>
                 <td>USD $20</td>
               </tr>
                <tr>
-                <td>Buy</td>
-                <td><a href="www.ebay.com">Ebay</a> <a href="www.lego.com">LEGO</a></td>
+                <td><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span>Buy</td>
+                <td><a href="https://www.ebay.com">Ebay</a> <a href="https://www.lego.com">LEGO</a></td>
               </tr>
             </tbody>
           </table>

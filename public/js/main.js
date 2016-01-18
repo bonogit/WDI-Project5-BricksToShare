@@ -1,26 +1,19 @@
 $(document).on('ready', function() {
   console.log('sanity check!');
+ 
+      $('#datetimepicker1').datepicker();
 
-  $('#theme').click(function(){
-     $('.list-group').hide();
-     $('.list-group_theme').show();
-  });
-  
-  $('#all').click(function(){
-    $('.list-group_theme').hide();
-    $('.list-group').show();
-  });
 });
 
 // click event for 'owning set'  
 $('#single_own').on('click',function(){
    var that = this;
    $(that).prop("disabled",true);
-   var singlesetId = parseInt($(this).closest('.wrap').data('id'));
+   var singlesetId = parseInt($(this).closest('.wrap').data('id')[0]);
    // singleset_setid = $(this).closest('.single_details').data('id');
-   var userlogId = 1;
+   var userlogId = parseInt($(this).closest('.wrap').data('id')[1]);
    var setDetail = $(this).closest('.single_details').data('id');
-   // console.log('test on output set details'+ setDetail);
+   console.log('test on output set id and user id'+singlesetId+'  '+userlogId );
    // console.log('test on output set id:'+singlesetId+" "+singleset_setid);
   $.ajax({
       type: "POST",
@@ -49,9 +42,9 @@ $('#single_own').on('click',function(){
 $('#single_want').on('click',function(){
    var that = this;
    $(that).prop("disabled",true);
-   var singlesetId = parseInt($(this).closest('.wrap').data('id'));
+   var singlesetId = parseInt($(this).closest('.wrap').data('id')[0]);
    // singleset_setid = $(this).closest('.single_details').data('id');
-   var userlogId = 1;
+   var userlogId =  parseInt($(this).closest('.wrap').data('id')[1]);
    var setDetail = $(this).closest('.single_details').data('id');
    // console.log('test on output set id:'+singlesetId+" "+singleset_setid);
   $.ajax({
@@ -88,7 +81,7 @@ $('.delete_ownorwantbtn').on('click',function(){
     data: { setDeleteId: setDeleteId}
   };
   $.ajax(options).done(function(data){
-    $(that).closest('mysets_record').remove();
+    $(that).closest('.mysets_record').remove();
   });
 });
 
@@ -96,6 +89,41 @@ $('.themeKey').on('click',function(){
   var that = this;
   var searchKey = $(that).text();
   $('#inputsm').val(searchKey);
+
+});
+
+// click event for 'add like'
+$('.star').on('click',function(){
+   var that = this;
+  var storyId = parseInt($(this).closest('.extended').data('id'));
+  var likeCount = parseInt($(this).closest('.media-body').data('id'))+1;
+  // console.log('storyId: '+ storyId+' and like no: '+ likeCount);
+  
+  // var options = {
+  //   type: "post",
+  //   url: '/newstory/addlike',
+  //   dataType: 'json',
+  //   data:{
+  //     storyId: storyId,
+  //     like_count: likeCount
+  //   }
+  // };
+  // $.ajax(options).done(function(data){
+  //   console.log('the like count: '+likeCount);
+  //   $(this).closest('.extended').find('.likeCount').html(likeCount);
+  // });
+
+  $.ajax({
+      type: "post",
+      url: '/newstory/addlike',
+      dataType:'json',
+      data:{
+        storyId: storyId,
+        like_count: likeCount
+      }
+  });
+  console.log('the like count: '+likeCount);
+    $(this).closest('.extended').find('.likeCount').html(likeCount);
 
 });
 

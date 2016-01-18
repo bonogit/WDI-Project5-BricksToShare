@@ -8,11 +8,13 @@ var env       = process.env.NODE_ENV || 'development';
 var config    = require(__dirname + '/../config/config.json')[env];
 var db        = {};
 
+//for production env
 if (config.use_env_variable) {
   var sequelize = new Sequelize(process.env.DATABASE_URL, {
     logging: false,
     dialectOptions: {
-      ssl: true /* for SSL config since Heroku gives you this out of the box */
+      ssl: true 
+       // for SSL config since Heroku gives you this out of the box 
     }
   });
 } else {
@@ -20,7 +22,7 @@ if (config.use_env_variable) {
 };
 
 
-
+// for development env
 // if (config.use_env_variable) {
 //   var sequelize = new Sequelize(process.env[config.use_env_variable]);
 // } else {

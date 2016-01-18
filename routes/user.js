@@ -12,59 +12,6 @@ router.get('/list', function(req, res) {
   });
 });
 
-// //create user
-// router.post('/users', function(req, res) {
-//   models.user.create({
-//     email: req.body.email
-//   }).then(function(user) {
-//     res.json(user);
-//   });
-// });
-
-// passport.use('log', new LocalStrategy({
-//   usernameField: 'username',
-//   passwordField: 'password',
-//   pass
-//   },
-//   function(req,username,password,cb){
-//     console.log('input user and password are: '+username+password);
-//     models.user.findOne({where: {email: username}}).then(function(user, err){
-//       if(err){
-//         // console.log('general err: '+err);
-//         return cb(err);
-//       }
-//       if(!user){
-//         console.log('user doesnot exist');
-//         return cb(null, false, req.flash('message','Incorrect username'));
-//       }
-//       if(user.password != password){
-//         console.log('user password not correct');
-//         return cb(null, false, req.flash('message','Invalid Password'));
-//       }
-//       console.log('username and password checked!');
-//       return cb(null, user);
-//     }).catch(function(err){
-//       console.log('new error: '+ err);
-//     });
-//   }
-//  ));
-
-// passport.serializeUser(function(user, cb) {
-//   console.log('serializeUser: '+user.id);
-//   cb(null, user.id);
-// });
-
-// passport.deserializeUser(function(id, cb) {
-//    console.log('deserializeUser: '+id);
-//   // models.user.findById(id, function (err, user) {
-//   //   if (err) { return cb(err); }
-//   //   cb(null, user);
-//   // });
-//    models.user.findById(id).then(function(user,err){
-//     if (err) { return cb(err)};
-//     return cb(null, user);
-//    });
-// });
 
 var isAuthenticated = function (req, res, next) {
   // if user is authenticated in the session, call the next() to call the next request handler 
@@ -84,8 +31,8 @@ module.exports = function(passport){
   });
   //render page for signin
   router.post('/signin',
-    passport.authenticate('login',{failureRedirect:'/dataCollector',
-      successRedirect : '/setsview', // redirect to the secure profile section
+    passport.authenticate('login',{failureRedirect:'/signup',
+      successRedirect : '/setsview', // redirect to the secure section
       failureFlash: true
     }));
 
@@ -101,16 +48,21 @@ module.exports = function(passport){
   });
   
   router.post('/singlelogin',
-    passport.authenticate('login',{failureRedirect:'/dataCollector',
-      successRedirect : '/mysets', // redirect to the secure profile section
+    passport.authenticate('login',{failureRedirect:'/signup',
+      successRedirect : '/setsview', // redirect to the secure section
       failureFlash: true
     }));
 
-  router.get('/signout',function(req,res){
+  // router.get('/signout',function(req,res){
+  //   req.logout();
+  //   res.redirect('/');
+  // });
+  
+  router.get('/logout',function(req,res){
     req.logout();
     res.redirect('/');
   });
-  
+
   return router;
 }
 

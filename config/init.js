@@ -6,6 +6,7 @@ module.exports = function(passport){
 
     passport.serializeUser(function(user, cb) {
       console.log('serializeUser: '+user.id);
+      // console.log(user.dataValues);
       cb(null, user.id);
     });
 
@@ -16,6 +17,7 @@ module.exports = function(passport){
       //   cb(null, user);
       // });
        models.user.findById(id).then(function(user,err){
+       console.log(user.dataValues);
         if (err) { return cb(err)};
         return cb(null, user);
        });

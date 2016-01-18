@@ -10,6 +10,7 @@ var dataset = {};
     $.ajax(options).done(function(data){
       legoSets = data.results.slice(0,30);
       console.log(legoSets);
+
      for (var i = 0; i<30; i++) {
       $.ajax({
         type: "POST",
@@ -28,7 +29,7 @@ var dataset = {};
       });
        
      };
-
+      $('#showData').text('30 records are loaded!');
 
 
       //  console.log(data[0]);

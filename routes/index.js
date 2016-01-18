@@ -8,7 +8,7 @@ var LocalStrategy = require('passport-local').Strategy;
 
 //for include syntax
 var userModel = models.user;
-
+var currentUserId = 1;
 
 
   // if user is authenticated in the session, call the next() to call the next request handler 
@@ -18,44 +18,69 @@ var isAuthenticated = function (req, res, next) {
   if (req.isAuthenticated())
     return next();
   // if the user is not authenticated then redirect him to the login page
-  res.redirect('/');
+  res.redirect('/users/signup');
 }
 
 /* GET home page. */
 
 router.get('/', function(req, res, next) {
-
-  models.brickset.findAll({
-    attributes:['set_id','descr','img_sm'
-    ,[models.sequelize.fn('COUNT',models.sequelize.col('counter')),'count']
-    ],
-    order: 'count DESC',
-    limit: 10,
-    group: ['set_id','descr','img_sm',],
-    // where: { $or: [{own: true},{want: true}]},
-    where: {want: true},
-  }).then(function(topWantSets){
-    models.brickset.findAll({
-      attributes:['set_id','descr','img_sm'
-      ,[models.sequelize.fn('COUNT',models.sequelize.col('counter')),'count']      
-      ],
-      // order: ['count'],
-      limit: 10,
-      group: ['set_id','descr','img_sm'],
-      order: 'count DESC',
-      where: {own: true}
-    }).then(function(topOwnSets){
-      res.render('index',{
-        topWantSets: topWantSets,
-        topOwnSets: topOwnSets
-      });
+    
+      models.brickset.findAll({
+        attributes:['set_id','descr','img_sm'
+        ,[models.sequelize.fn('COUNT',models.sequelize.col('counter')),'count']
+        ],
+        order: 'count DESC',
+        limit: 10,
+        group: ['set_id','descr','img_sm',],
+        where: {want: true},
+      }).then(function(topWantSets){
+        models.brickset.findAll({
+          attributes:['set_id','descr','img_sm'
+          ,[models.sequelize.fn('COUNT',models.sequelize.col('counter')),'count']      
+          ],
+          limit: 10,
+          group: ['set_id','descr','img_sm'],
+          order: 'count DESC',
+          where: {own: true}
+        }).then(function(topOwnSets){
+            models.story.findAll({
+              attributes: ['id','title','source','img_src','contents','updatedAt','like_count'],
+              limit: 4
+        }).then(function(story){
+            models.like.count({
+              where:{storyId: 1}
+        }).then(function(story1Like){
+            models.like.count({
+              where: {storyId: 3}
+        }).then(function(story2Like){
+            models.like.count({
+              where: {storyId: 4}
+        }).then(function(story3Like){
+            models.like.count({
+              where: {storyId: 5}
+        }).then(function(story4Like){
+          var storyLike = [story1Like,story2Like,story3Like,story4Like]; 
+          res.render('index',{
+            topWantSets: topWantSets,
+            topOwnSets: topOwnSets,
+            story: story,
+            storyLike: storyLike
+          });
+        });
+       });   
+      });    
+     }); 
+     });
     });
-  });  
+  });
 });
+
+
+
 
 //page for sets view
 router.get('/setsview',isAuthenticated,function(req,res){
-  console.log('current user check!', req.session.passport.user.id);
+  currentUserId = parseInt(req.session.passport.user);
   models.brickset.count({
     where:{$and: [{own: false},{want: false}]}
   }).then(function(countSum){
@@ -68,18 +93,24 @@ router.get('/setsview',isAuthenticated,function(req,res){
       limit: 10,
       offset: 0
      }).then(function(legoSets){
-        console.log('current user iddfdfdfffffff: '+req.user);
+        models.user.find({
+          where: {id: currentUserId}
+     }).then(function(currentUser){
+        // console.log('currentUser email'+currentUser.email);
         res.render('setsview',{
             legoSets: legoSets.rows,
             resultNo: countSum,
-            themeTag: themeTag
+            themeTag: themeTag,
+            currentUserName: currentUser.email
           });  
+       });
      });   
     });
   });
 });
 
-router.get('/setsview/:id',function(req,res){
+router.get('/setsview/:id',isAuthenticated,function(req,res){
+  currentUserId = parseInt(req.session.passport.user);
    models.brickset.count({
     where:{$and: [{own: false},{want: false}]}
   }).then(function(countSum){
@@ -93,11 +124,16 @@ router.get('/setsview/:id',function(req,res){
       limit: 10,
       offset: offsetNo
      }).then(function(legoSets){
+        models.user.find({
+          where: {id: currentUserId}
+     }).then(function(currentUser){
         res.render('setsview',{
             legoSets: legoSets,
             resultNo: countSum,
-            themeTag: themeTag
+            themeTag: themeTag,
+            currentUserName: currentUser.email
           });  
+      });
      });   
     });
   });
@@ -105,25 +141,31 @@ router.get('/setsview/:id',function(req,res){
 
 
 //for sets view search
-router.get('/search',function(req,res){
+router.get('/search',isAuthenticated,function(req,res){
+  currentUserId = parseInt(req.session.passport.user);
   models.brickset.findAll({
     where: {
       theme: req.query.key,
       $and: [{own: false},{want: false}]
     }
   }).then(function(searchByTheme){
+      models.user.find({
+        where: {id: currentUserId}
+    }).then(function(currentUser){
     res.render('search',{
       dataByTheme: searchByTheme,
       resultNo: searchByTheme.length,
-      themeName: req.query.key
+      themeName: req.query.key,
+      currentUserName: currentUser.email
+    });
     });
   });
 });
 
 
 //show single set
-router.get('/singleset/:id',function(req,res){
-  
+router.get('/singleset/:id',isAuthenticated,function(req,res){
+  currentUserId = parseInt(req.session.passport.user);
   models.brickset.find({
     where: {
       id: req.params.id
@@ -151,16 +193,22 @@ router.get('/singleset/:id',function(req,res){
         },
         include:[{
           model: userModel,
-          id: 1
+          id: currentUserId
         }]
     }).then(function(checkOwnSum){
+      models.user.find({
+        where: {id: currentUserId}
+    }).then(function(currentUser){
       // console.log('records of want is:'+ownData.count);
       res.render('singleset',{
       singleset: singleset,
       ownCount: ownCount,
       wantCount: wantCount,
-      checkOwnSum: checkOwnSum
+      checkOwnSum: checkOwnSum,
+      currentUserName: currentUser.email,
+      currentUserId: currentUser.id
       });
+     });
     });
    });
   });
@@ -210,15 +258,16 @@ router.post('/singleset/want',function(req,res){
 
 
 //my sets view
-router.get('/mysets',function(req,res){
-
+router.get('/mysets',isAuthenticated,function(req,res){
+currentUserId = parseInt(req.session.passport.user);
+console.log(currentUserId);
   models.brickset.findAndCountAll({
     where:{
       own: true
     },
     include:[{
           model: userModel,
-          id: 1
+          id: currentUserId
         }]
   }).then(function(ownData){
       models.brickset.findAndCountAll({
@@ -227,14 +276,21 @@ router.get('/mysets',function(req,res){
       },
         include:[{
           model: userModel,
-          id: 1
-        }]
+          id: currentUserId
+        }],
+         limit: 10,
+         offset: 0
   }).then(function(wantData){
+        models.user.find({
+          where: {id: currentUserId}
+     }).then(function(currentUser){
         res.render('mysets',{
           ownData: ownData.rows,
           wantData: wantData.rows,
-          recordCount: ownData.count+wantData.count
+          recordCount: ownData.count+wantData.count,
+          currentUserName: currentUser.email
         });
+      });  
   });
  });
 });
@@ -271,11 +327,39 @@ router.post('/brickset', function(req, res) {
   });
 });
 
+//render page for new story
+router.get('/newstory',function(req,res){
+  var story = models.story;
+  models.like.findAll({
+    include: [{
+      model: story
+    }]
+  }).then(function(story){
+    res.render('newstory');
+  });
+});
 
+router.post('/updatestory',function(req,res){
+  models.story.create({
+    title: req.body.title,
+    source: req.body.author,
+    img_src: req.body.image_src,
+    contents: req.body.content
+  }).then(function(newstory){
+    // res.json(newstory);
+    res.redirect('/');
+  });
+});
 
+//add like
+router.post('/newstory/addlike',function(req,res){
 
-
-
+   models.like.create({
+      storyId: req.body.storyId
+  }).then(function(newLike){
+    res.json(newLike);
+  });
+});
 
 module.exports = router;
 
