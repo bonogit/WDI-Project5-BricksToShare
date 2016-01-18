@@ -108,7 +108,7 @@ router.get('/setsview',isAuthenticated,function(req,res){
     });
   });
 });
-
+//for pagination on sets view
 router.get('/setsview/:id',isAuthenticated,function(req,res){
   currentUserId = parseInt(req.session.passport.user);
    models.brickset.count({
@@ -146,8 +146,10 @@ router.get('/search',isAuthenticated,function(req,res){
   models.brickset.findAll({
     where: {
       theme: req.query.key,
-      $and: [{own: false},{want: false}]
-    }
+      $and: [{own: false},{want: false}]     
+    },
+     limit: 10,
+      offset: 0
   }).then(function(searchByTheme){
       models.user.find({
         where: {id: currentUserId}
@@ -161,6 +163,32 @@ router.get('/search',isAuthenticated,function(req,res){
     });
   });
 });
+
+//for pagination on sets search
+router.get('/search/:id',isAuthenticated,function(req,res){
+  currentUserId = parseInt(req.session.passport.user);
+  var offsetNo = (parseInt(req.params.id)-1)*10;
+  models.brickset.findAll({
+    where: {
+      theme: req.query.key,
+      $and: [{own: false},{want: false}]     
+    },
+     limit: 10,
+      offset: offsetNo
+  }).then(function(searchByTheme){
+      models.user.find({
+        where: {id: currentUserId}
+    }).then(function(currentUser){
+    res.render('search',{
+      dataByTheme: searchByTheme,
+      resultNo: searchByTheme.length,
+      themeName: req.query.key,
+      currentUserName: currentUser.email
+    });
+    });
+  });
+});
+
 
 
 //show single set
@@ -193,7 +221,7 @@ router.get('/singleset/:id',isAuthenticated,function(req,res){
         },
         include:[{
           model: userModel,
-          id: currentUserId
+          where: {id: currentUserId}
         }]
     }).then(function(checkOwnSum){
       models.user.find({
@@ -260,14 +288,14 @@ router.post('/singleset/want',function(req,res){
 //my sets view
 router.get('/mysets',isAuthenticated,function(req,res){
 currentUserId = parseInt(req.session.passport.user);
-console.log(currentUserId);
+// console.log(currentUserId);
   models.brickset.findAndCountAll({
     where:{
       own: true
     },
     include:[{
           model: userModel,
-          id: currentUserId
+          where: {id: currentUserId}
         }]
   }).then(function(ownData){
       models.brickset.findAndCountAll({
@@ -276,10 +304,8 @@ console.log(currentUserId);
       },
         include:[{
           model: userModel,
-          id: currentUserId
-        }],
-         limit: 10,
-         offset: 0
+          where: {id: currentUserId}
+        }]
   }).then(function(wantData){
         models.user.find({
           where: {id: currentUserId}

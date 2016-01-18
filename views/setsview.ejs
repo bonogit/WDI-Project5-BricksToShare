@@ -16,32 +16,39 @@
          <input class="form-control input-lg" id="inputsm" name="key" type="text" placeholder="Search By Theme...">
          <button type="submit" class="btn btn-info btn-lg search_btn ">Search</button>
           <div class="search_key_theme">
-            List Of Theme:
-
-            <% var themes=[];
-            themeTag.forEach(function(elem){
-               themes.push(elem.theme);
-             }); %>
-             <% var themesUniq = themes.filter(function(elem, pos) {
-                return themes.indexOf(elem) == pos;
-                 });  %>
-             <% themesUniq.forEach(function(elem){%>
-              <a href="#" class="themeKey"><%= elem %></a>
-              <% }); %>
+           <span>
+            List Of Theme:  
+           </span>
+         
+              <% var themes=[];
+              themeTag.forEach(function(elem){
+                 themes.push(elem.theme);
+               }); %>
+               <% var themesUniq = themes.filter(function(elem, pos) {
+                  return themes.indexOf(elem) == pos;
+                   });  %>
+               <% themesUniq.forEach(function(elem){%>
+                <a href="#" class="themeKey"><%= elem %></a>
+                <% }); %>
+             
           </div>
+ <!--          <div style="height: 2em"></div> -->
           <div class="search_key_theme">
-            List Of Year:
-
-            <% var years=[];
-            legoSets.forEach(function(elem){
-               years.push(elem.year);
-             }); %>
-             <% var yearsUniq = years.filter(function(elem, pos) {
-                return years.indexOf(elem) == pos;
-                 });  %>
-             <% yearsUniq.forEach(function(elem){%>
-              <a href="#" >2016</a>
-              <% }); %>                         
+            <span>
+            List Of Year:  
+            </span>
+           
+              <% var years=[];
+              legoSets.forEach(function(elem){
+                 years.push(elem.year);
+               }); %>
+               <% var yearsUniq = years.filter(function(elem, pos) {
+                  return years.indexOf(elem) == pos;
+                   });  %>
+               <% yearsUniq.forEach(function(elem){%>
+                <a href="#" >2016</a>
+                <% }); %>                         
+         
           </div>
        </form> 
     </div>

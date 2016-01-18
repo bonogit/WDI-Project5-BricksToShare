@@ -8,10 +8,10 @@ var dataset = {};
     };
 
     $.ajax(options).done(function(data){
-      legoSets = data.results.slice(0,30);
+      legoSets = data.results.slice(0,40);
       console.log(legoSets);
 
-     for (var i = 0; i<30; i++) {
+     for (var i = 0; i<40; i++) {
       $.ajax({
         type: "POST",
         url: '/brickset',
@@ -29,7 +29,7 @@ var dataset = {};
       });
        
      };
-      $('#showData').text('30 records are loaded!');
+      $('#showData').text('40 records are loaded!');
 
 
       //  console.log(data[0]);
