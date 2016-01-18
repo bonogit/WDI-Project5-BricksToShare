@@ -51,13 +51,13 @@ router.get('/', function(req, res, next) {
               where:{storyId: 1}
         }).then(function(story1Like){
             models.like.count({
-              where: {storyId: 3}
+              where: {storyId: 2}
         }).then(function(story2Like){
             models.like.count({
-              where: {storyId: 4}
+              where: {storyId: 3}
         }).then(function(story3Like){
             models.like.count({
-              where: {storyId: 5}
+              where: {storyId: 4}
         }).then(function(story4Like){
           var storyLike = [story1Like,story2Like,story3Like,story4Like]; 
           res.render('index',{
@@ -328,15 +328,22 @@ router.post('/brickset', function(req, res) {
 });
 
 //render page for new story
-router.get('/newstory',function(req,res){
+router.get('/newstory',isAuthenticated,function(req,res){
+  currentUserId = parseInt(req.session.passport.user);
   var story = models.story;
   models.like.findAll({
     include: [{
       model: story
     }]
   }).then(function(story){
-    res.render('newstory');
+       models.user.find({
+        where: {id: currentUserId}
+  }).then(function(currentUser){
+    res.render('newstory',{
+      currentUserName: currentUser.email 
+    });
   });
+ }); 
 });
 
 router.post('/updatestory',function(req,res){
