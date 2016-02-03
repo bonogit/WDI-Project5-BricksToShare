@@ -1,6 +1,5 @@
 <% include header %>
 
-
 <div class="container-fluid wrap">
     <div class="row">
       <div class="col-sm-12">
@@ -9,20 +8,17 @@
           <p>There are over 13700 sets in LEGO bricks.Bricks2Share is a place to share latest brick sets news with other lego lovers and track the most popular brick sets!</p>
           <div class="heads_btns">
             <a href="/users/singlelogin" class="btn btn-primary btn-lg heads_log" role="button">Log In</a> 
-
             <a href="/users/signup" class="btn btn-primary btn-lg head_submit" role="button">Sign up</a>
-
           </div>
         </div>
       </div>
-
+    </div>
       <div class="row">
           <div class="col-xs-11 col-md-7">
               <h1 style="text-align: center">Brick New - It's all about the Bricks!</h3>
-
-                <% var index=0;%>
+                <% var index=0, text=[];%>
+                
                 <% story.forEach(function(elem){%>
-
                   <div class="media-box">
                         <div class="post-text">
                           <h3><%= elem.title %></h3>
@@ -39,7 +35,11 @@
                             <img src="<%= elem.img_src%>" alt="" width="140px" height="100px" margin-bottom="1em">
                             </div>
                           <div class="media-body" data-id='<%= storyLike[index]%>'>
-                            <p ><%= elem.contents %></p>    
+                            <p ><%= text = elem.contents.split("\r") %>
+                              <% for (j = 0; j < text.length; j++) { %> 
+                                  <%=  text[j]  %> <br>
+                              <% }%>
+                            </p>    
                               <div class="extended articlelike_btn" data-id='<%= elem.id%>'>
                                     <button class="star">Like  
                                     <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 
@@ -52,11 +52,7 @@
                     </div>
                    <% index = index + 1; %> 
                   <% }); %>
-
-
-       </div> <!-- end of left content block -->
-
-
+        </div> <!-- end of left content block -->
         <div class="col-xs-11 col-md-5 content_right">
           <h3>Top 10 brick sets</h3>
           <ul class="nav nav-tabs" role='tablist' style="margin-bottom:5px font-size: 1em color: black">
@@ -85,7 +81,8 @@
                 <% }); %>
              </div>
           </div>
-</div>
+      </div>
+  </div>
 </div>
 
 <% include footer %>
